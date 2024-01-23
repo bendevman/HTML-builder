@@ -10,8 +10,7 @@ async function createBundle(inputFolder, outputFolder) {
   const fileList = files.filter(
     (file) => file.isFile() && path.extname(file.name) === '.css',
   );
-  deleteBundle(outputPath);
-
+  await deleteBundle(outputPath);
   for (const file of fileList) {
     const readStream = fs.createReadStream(
       path.join(inputPath, file.name),
@@ -27,7 +26,7 @@ async function createBundle(inputFolder, outputFolder) {
 async function deleteBundle(dirPath) {
   const files = await readdir(dirPath);
   for (const file of files) {
-    if (file.name === 'bundle.css') {
+    if (file === 'bundle.css') {
       const filePath = path.join(dirPath, file);
       await unlink(filePath);
     }
