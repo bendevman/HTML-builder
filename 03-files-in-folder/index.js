@@ -7,8 +7,9 @@ async function getFilesInfo() {
   for (const file of files) {
     if (file.isFile()) {
       const filePath = path.join(srcPath, file.name);
-      const fileExt = path.extname(file.name);
+      let fileExt = path.extname(file.name);
       const fileName = path.basename(filePath, fileExt);
+      fileExt = fileExt ? fileExt : fileName;
       const fileStats = await stat(filePath);
       console.log(`${fileName} - ${fileExt.slice(1)} - ${fileStats.size}b`);
     }
